@@ -1,0 +1,76 @@
+﻿@model Myntra.Models.Category
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@{
+    var title = Model.Id == 0 ? "Add Category" : "Edit Category";
+}
+
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Tables</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Tables</li>
+    </ol>
+    <div class="card mb-4">
+        <h2>@title</h2>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="Form" asp-controller="AdminCategories" method="post">
+                @if (Model.Id != 0)
+                {
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                }
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="Name" value="@Model.Name" class="form-control" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" name="Slug" value="@Model.Slug" class="form-control" required />
+                    <span asp-validation-for="Slug" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Parent Category</label>
+                <select name="ParentId" class="form-control">
+                    <option value="">-- None --</option>
+                    @foreach (var parent in ViewBag.ParentCategories)
+                    {
+                        <option value="@parent.Id" selected="@(parent.Id == Model.ParentId)">
+                            @parent.Name
+                        </option>
+                    }
+                </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Sort Order</label>
+                    <input type="number" name="SortOrder" value="@Model.SortOrder" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="text" name="ImageUrl" value="@Model.ImageUrl" class="form-control" />
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" name="IsActive" class="form-check-input" @(Model.IsActive ? "checked" : "") />
+                    <label class="form-check-label">Is Active</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
