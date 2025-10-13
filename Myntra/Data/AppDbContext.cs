@@ -19,7 +19,7 @@ namespace Myntra.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<Review> Reviews { get; set; }
-
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
